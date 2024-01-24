@@ -29,19 +29,19 @@ let modelForFeaturedEpisodes = {
   episodes_list: [],
 }
 
-if (fs.existsSync('./tmp/cache.json')) {
-  console.log('cache exists')
-} else {
-  console.log("cache doesn't exist")
-  fs.writeFileSync('./tmp/cache.json', JSON.stringify(modelForCacheFile, null, 2))
-}
+// if (fs.existsSync('./tmp/cache.json')) {
+//   console.log('cache exists')
+// } else {
+//   console.log("cache doesn't exist")
+//   fs.writeFileSync('./tmp/cache.json', JSON.stringify(modelForCacheFile, null, 2))
+// }
 
-if (fs.existsSync('featured_episodes.json')) {
-  console.log('featured episodes list exists')
-} else {
-  console.log("featured episodes list doesn't exist")
-  fs.writeFileSync('featured_episodes.json', JSON.stringify(modelForFeaturedEpisodes, null, 2))
-}
+// if (fs.existsSync('featured_episodes.json')) {
+//   console.log('featured episodes list exists')
+// } else {
+//   console.log("featured episodes list doesn't exist")
+//   fs.writeFileSync('featured_episodes.json', JSON.stringify(modelForFeaturedEpisodes, null, 2))
+// }
 
 const PORT = 8080
 
@@ -232,45 +232,45 @@ app.get('/last-episode', async function (req, res) {
 
   let request_output = null
 
-  if (formatted) {
-    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
-    let data = cache.last_episode.formatted.data
-    let last_update = cache.last_episode.formatted.last_update
-    let last_update_date = new Date(last_update)
-    let currentDate = new Date()
+  // if (formatted) {
+  //   let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
+  //   let data = cache.last_episode.formatted.data
+  //   let last_update = cache.last_episode.formatted.last_update
+  //   let last_update_date = new Date(last_update)
+  //   let currentDate = new Date()
 
-    let diffMs = currentDate - last_update_date
-    let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000)
-    if (
-      Object.keys(data).length !== 0 &&
-      String(last_update).length !== 0 &&
-      diffMins >= 0 &&
-      diffMins < 2
-    ) {
-      output.data = data
-      res.send(output)
-      return
-    }
-  } else {
-    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
-    let data = cache.last_episode.unformatted.data
-    let last_update = cache.last_episode.unformatted.last_update
-    let last_update_date = new Date(last_update)
-    let currentDate = new Date()
+  //   let diffMs = currentDate - last_update_date
+  //   let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000)
+  //   if (
+  //     Object.keys(data).length !== 0 &&
+  //     String(last_update).length !== 0 &&
+  //     diffMins >= 0 &&
+  //     diffMins < 2
+  //   ) {
+  //     output.data = data
+  //     res.send(output)
+  //     return
+  //   }
+  // } else {
+  //   let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
+  //   let data = cache.last_episode.unformatted.data
+  //   let last_update = cache.last_episode.unformatted.last_update
+  //   let last_update_date = new Date(last_update)
+  //   let currentDate = new Date()
 
-    let diffMs = currentDate - last_update_date
-    let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000)
-    if (
-      Object.keys(data).length !== 0 &&
-      String(last_update).length !== 0 &&
-      diffMins >= 0 &&
-      diffMins < 2
-    ) {
-      output.data = data
-      res.send(output)
-      return
-    }
-  }
+  //   let diffMs = currentDate - last_update_date
+  //   let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000)
+  //   if (
+  //     Object.keys(data).length !== 0 &&
+  //     String(last_update).length !== 0 &&
+  //     diffMins >= 0 &&
+  //     diffMins < 2
+  //   ) {
+  //     output.data = data
+  //     res.send(output)
+  //     return
+  //   }
+  // }
 
   await axios
     .get(
@@ -316,17 +316,17 @@ app.get('/last-episode', async function (req, res) {
       iframe: iframeurl,
     }
     request_output.id = id
-    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
-    cache.last_episode.formatted.data = request_output
-    let now = new Date()
-    cache.last_episode.formatted.last_update = now
-    fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
+    // let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
+    // cache.last_episode.formatted.data = request_output
+    // let now = new Date()
+    // cache.last_episode.formatted.last_update = now
+    // fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
   } else {
-    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
-    cache.last_episode.unformatted.data = request_output
-    let now = new Date()
-    cache.last_episode.unformatted.last_update = now
-    fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
+    // let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
+    // cache.last_episode.unformatted.data = request_output
+    // let now = new Date()
+    // cache.last_episode.unformatted.last_update = now
+    // fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
   }
 
   output.data = request_output
@@ -342,32 +342,32 @@ app.get('/featured-episodes', function (req, res) {
 
   let episodes_list = JSON.parse(fs.readFileSync('featured_episodes.json', 'utf-8'))
   episodes_list = episodes_list.episodes_list
-  let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
-  let cache_episodes_list = cache.featured_episodes.episodes_list
+  // let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
+  // let cache_episodes_list = cache.featured_episodes.episodes_list
 
-  let data = cache.featured_episodes.data
-  let last_update = cache.featured_episodes.last_update
-  let last_update_date = new Date(last_update)
-  let currentDate = new Date()
+  // let data = cache.featured_episodes.data
+  // let last_update = cache.featured_episodes.last_update
+  // let last_update_date = new Date(last_update)
+  // let currentDate = new Date()
 
-  let diffMs = currentDate - last_update_date
-  let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000)
-  //check if cache already has up-to-date information
-  if (
-    data.length !== 0 &&
-    JSON.stringify(cache_episodes_list) == JSON.stringify(episodes_list) &&
-    String(last_update).length !== 0 &&
-    diffMins >= 0 &&
-    diffMins < 6
-  ) {
-    output.data = data
-    res.send(output)
-    return
-  }
-  //check if featured episodes list has hanged since the last cache update
-  if (JSON.stringify(cache_episodes_list) != JSON.stringify(episodes_list)) {
-    cache.featured_episodes.episodes_list = episodes_list
-  }
+  // let diffMs = currentDate - last_update_date
+  // let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000)
+  // //check if cache already has up-to-date information
+  // if (
+  //   data.length !== 0 &&
+  //   JSON.stringify(cache_episodes_list) == JSON.stringify(episodes_list) &&
+  //   String(last_update).length !== 0 &&
+  //   diffMins >= 0 &&
+  //   diffMins < 6
+  // ) {
+  //   output.data = data
+  //   res.send(output)
+  //   return
+  // }
+  // //check if featured episodes list has hanged since the last cache update
+  // if (JSON.stringify(cache_episodes_list) != JSON.stringify(episodes_list)) {
+  //   cache.featured_episodes.episodes_list = episodes_list
+  // }
 
   let temp_data = []
 
@@ -433,12 +433,12 @@ app.get('/featured-episodes', function (req, res) {
         temp_sorted_data.push(foundObject)
       }
 
-      //saving the output to cache and sending reply to the user
+      // //saving the output to cache and sending reply to the user
       output.data = temp_sorted_data
-      cache.featured_episodes.data = temp_sorted_data
-      let now = new Date()
-      cache.featured_episodes.last_update = now
-      fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
+      // cache.featured_episodes.data = temp_sorted_data
+      // let now = new Date()
+      // cache.featured_episodes.last_update = now
+      // fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
 
       res.send(output)
       return
