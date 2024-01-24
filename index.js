@@ -29,11 +29,11 @@ let modelForFeaturedEpisodes = {
   episodes_list: [],
 }
 
-if (fs.existsSync('cache.json')) {
+if (fs.existsSync('./tmp/cache.json')) {
   console.log('cache exists')
 } else {
   console.log("cache doesn't exist")
-  fs.writeFileSync('cache.json', JSON.stringify(modelForCacheFile, null, 2))
+  fs.writeFileSync('./tmp/cache.json', JSON.stringify(modelForCacheFile, null, 2))
 }
 
 if (fs.existsSync('featured_episodes.json')) {
@@ -233,7 +233,7 @@ app.get('/last-episode', async function (req, res) {
   let request_output = null
 
   if (formatted) {
-    let cache = JSON.parse(fs.readFileSync('cache.json', 'utf-8'))
+    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
     let data = cache.last_episode.formatted.data
     let last_update = cache.last_episode.formatted.last_update
     let last_update_date = new Date(last_update)
@@ -252,7 +252,7 @@ app.get('/last-episode', async function (req, res) {
       return
     }
   } else {
-    let cache = JSON.parse(fs.readFileSync('cache.json', 'utf-8'))
+    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
     let data = cache.last_episode.unformatted.data
     let last_update = cache.last_episode.unformatted.last_update
     let last_update_date = new Date(last_update)
@@ -316,17 +316,17 @@ app.get('/last-episode', async function (req, res) {
       iframe: iframeurl,
     }
     request_output.id = id
-    let cache = JSON.parse(fs.readFileSync('cache.json', 'utf-8'))
+    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
     cache.last_episode.formatted.data = request_output
     let now = new Date()
     cache.last_episode.formatted.last_update = now
-    fs.writeFileSync('cache.json', JSON.stringify(cache, null, 2))
+    fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
   } else {
-    let cache = JSON.parse(fs.readFileSync('cache.json', 'utf-8'))
+    let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
     cache.last_episode.unformatted.data = request_output
     let now = new Date()
     cache.last_episode.unformatted.last_update = now
-    fs.writeFileSync('cache.json', JSON.stringify(cache, null, 2))
+    fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
   }
 
   output.data = request_output
@@ -342,7 +342,7 @@ app.get('/featured-episodes', function (req, res) {
 
   let episodes_list = JSON.parse(fs.readFileSync('featured_episodes.json', 'utf-8'))
   episodes_list = episodes_list.episodes_list
-  let cache = JSON.parse(fs.readFileSync('cache.json', 'utf-8'))
+  let cache = JSON.parse(fs.readFileSync('./tmp/cache.json', 'utf-8'))
   let cache_episodes_list = cache.featured_episodes.episodes_list
 
   let data = cache.featured_episodes.data
@@ -438,7 +438,7 @@ app.get('/featured-episodes', function (req, res) {
       cache.featured_episodes.data = temp_sorted_data
       let now = new Date()
       cache.featured_episodes.last_update = now
-      fs.writeFileSync('cache.json', JSON.stringify(cache, null, 2))
+      fs.writeFileSync('./tmp/cache.json', JSON.stringify(cache, null, 2))
 
       res.send(output)
       return
